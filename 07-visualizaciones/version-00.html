@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>[Nombre del proyecto] · Visualización · Innovación y Gestión de Proyectos</title>
+<!--
+  Plantilla de la visualización del proyecto (versión 00).
+  Quien genere una versión nueva conserva el diseño, la navegación y las tres filminas,
+  y reemplaza cada texto entre corchetes con lo que dicen los archivos del repositorio.
+  Cada elemento lleva en data-tipo su estatus (hecho, supuesto, inferencia o pregunta),
+  en data-desc su descripción y en data-fuente el archivo de donde sale.
+  Lo que no tenga fuente se marca [POR VALIDAR].
+-->
+<style>
+:root{
+  --navy:#00479B;--blue:#006AEA;--light:#9CC8FF;--gray:#D1D3D4;
+  --fT:"DIN Alternate","DINAlternate-Bold","DIN Condensed","D-DIN","Bahnschrift","DIN Pro","Barlow Semi Condensed","Arial Narrow",sans-serif;
+  --fB:"Circular Std","CircularStd","Circular","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#00336f;overflow:hidden;font-family:var(--fB);-webkit-font-smoothing:antialiased}
+#viewport{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
+#stage{width:1920px;height:1080px;position:relative;flex:none;overflow:hidden;transform-origin:center center}
+button{font:inherit;color:inherit;cursor:pointer}
+
+/* ---------- slides ---------- */
+.slide{position:absolute;inset:0;padding:100px 140px 120px;display:flex;flex-direction:column;
+  opacity:0;visibility:hidden;transform:translateX(50px);transition:opacity .45s ease,transform .45s ease,visibility 0s linear .45s}
+.slide.active{opacity:1;visibility:visible;transform:none;transition:opacity .45s ease,transform .45s ease}
+.slide.past{transform:translateX(-50px)}
+.navy{background:var(--navy);color:#fff;--acc:var(--light);--ink:#fff;--bg:var(--navy);--line:rgba(156,200,255,.5);--card:rgba(255,255,255,.07)}
+.blue{background:var(--blue);color:#fff;--acc:var(--light);--ink:#fff;--bg:var(--blue);--line:rgba(220,235,255,.55);--card:rgba(255,255,255,.11)}
+.white{background:#fff;color:var(--navy);--acc:var(--blue);--ink:var(--navy);--bg:#fff;--line:var(--gray);--card:#f1f4f8}
+
+.kick{font-family:var(--fT);font-weight:700;text-transform:uppercase;letter-spacing:.14em;font-size:24px;color:var(--acc);margin-bottom:22px}
+.t{font-family:var(--fT);font-weight:700;line-height:1.02;letter-spacing:-.005em}
+h1.t{font-size:120px}
+.stmt{font-family:var(--fT);font-weight:700;font-size:92px;line-height:1.06;max-width:1500px}
+.stmt em{font-style:normal;color:var(--acc)}
+.lead{font-size:36px;line-height:1.38;max-width:1250px;opacity:.92}
+.small{font-size:26px;line-height:1.4;opacity:.85}
+.note{margin-top:auto;font-size:28px;line-height:1.35;padding-top:24px;border-top:2px solid var(--line);max-width:1640px}
+.note b{font-family:var(--fT);color:var(--acc);text-transform:uppercase;letter-spacing:.08em;font-size:22px;margin-right:12px}
+.spacer{flex:1}
+.mt{margin-top:36px}
+code.lit{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;font-size:.85em;background:var(--card);padding:2px 10px}
+
+.foot{position:absolute;left:140px;bottom:42px;display:flex;align-items:center;gap:28px;pointer-events:none}
+.foot .pg{font-family:var(--fT);font-size:20px;letter-spacing:.1em;opacity:.7}
+.cover .foot{display:none}
+
+/* decorative line art (brand "elementos adicionales") */
+.deco{position:absolute;right:90px;top:90px;height:820px;pointer-events:none}
+.deco *{fill:none;stroke:var(--line);stroke-width:2.2;vector-effect:non-scaling-stroke}
+.slide[data-deco] .stmt{max-width:1240px}
+
+/* buttons */
+.btn{font-family:var(--fT);font-weight:700;font-size:24px;letter-spacing:.06em;text-transform:uppercase;
+  border:2px solid var(--ink);background:transparent;color:var(--ink);padding:14px 26px;transition:all .2s}
+.btn.solid{background:var(--ink);color:var(--bg)}
+.btns{display:flex;gap:14px;flex-wrap:wrap}
+a.btn{text-decoration:none;display:inline-block}
+
+/* cover */
+.cover .sub{font-family:var(--fT);font-size:56px;color:var(--acc);margin-top:20px;max-width:1250px}
+.cover .who{font-family:var(--fT);font-size:40px}
+
+/* trio chips */
+.trio{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:70px}
+.trio div{border-top:3px solid var(--acc);padding-top:20px;font-size:30px;line-height:1.3}
+.trio b{display:block;font-family:var(--fT);font-size:24px;letter-spacing:.12em;text-transform:uppercase;color:var(--acc);margin-bottom:8px}
+
+/* numbered list */
+.nlist{list-style:none;display:flex;flex-direction:column;gap:6px}
+.nlist li{display:flex;gap:36px;align-items:baseline;padding:22px 0;border-bottom:2px solid var(--line);font-size:38px;line-height:1.25}
+.nlist li span{font-family:var(--fT);color:var(--acc);font-size:34px;width:60px;flex:none}
+.nlist li small{display:block;font-size:26px;opacity:.75;margin-top:6px}
+
+/* nav chrome */
+#nav{position:fixed;right:18px;bottom:16px;display:flex;gap:8px;z-index:10;opacity:.25;transition:opacity .3s}
+#nav:hover,body.mouse #nav{opacity:1}
+#nav button{width:44px;height:44px;border:1px solid rgba(255,255,255,.5);background:rgba(0,40,90,.6);color:#fff;font-size:20px;backdrop-filter:blur(4px)}
+#bar{position:fixed;left:0;bottom:0;height:4px;background:var(--light);z-index:10;transition:width .4s}
+#help{position:fixed;left:50%;transform:translateX(-50%);bottom:12px;color:rgba(255,255,255,.6);font-size:12px;z-index:10;opacity:0;transition:opacity .3s;font-family:var(--fB)}
+body.mouse #help{opacity:1}
+#overview{position:fixed;inset:0;background:rgba(0,30,70,.96);z-index:20;display:none;overflow:auto;padding:40px}
+#overview.open{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;align-content:start}
+#overview button{background:var(--navy);border:1px solid rgba(156,200,255,.4);color:#fff;text-align:left;padding:16px;min-height:96px;font-family:var(--fB);font-size:15px;line-height:1.3}
+#overview button span{display:block;font-family:var(--fT);color:var(--light);font-size:22px}
+#overview button.cur{background:var(--blue)}
+
+/* ---------- visualización ---------- */
+.vista{display:flex;gap:48px;flex:1;min-height:0;margin-top:10px}
+.lienzo{flex:1;position:relative;min-height:0}
+.lienzo svg{width:100%;height:100%;overflow:visible}
+.panel{flex:0 0 440px;display:flex;flex-direction:column;gap:22px}
+.ficha{background:var(--card);padding:26px 28px;min-height:250px}
+.ficha b{display:block;font-family:var(--fT);font-size:22px;letter-spacing:.12em;text-transform:uppercase;color:var(--acc);margin-bottom:10px}
+.ficha p{font-size:24px;line-height:1.38}
+.ficha .fuente{margin-top:14px;font-size:20px;opacity:.75}
+.leyenda{display:flex;flex-direction:column;gap:12px;font-size:21px}
+.leyenda div{display:flex;align-items:center;gap:16px}
+.leyenda svg{flex:none}
+.origen{font-size:20px;opacity:.7}
+.nodo rect{fill:#fff;stroke:var(--navy);stroke-width:2.5}
+.nodo.zona rect{fill:var(--card);stroke:none}
+.nodo text{font-family:var(--fB);font-size:22px;fill:var(--navy)}
+.nodo .rot{font-family:var(--fT);font-weight:700;font-size:24px;letter-spacing:.12em;text-transform:uppercase;fill:var(--blue)}
+.elem{cursor:pointer}
+.elem:hover rect{stroke:var(--blue);stroke-width:4}
+.flecha{fill:none;stroke:var(--navy);stroke-width:3}
+.flecha.hecho{stroke-dasharray:none}
+.flecha.supuesto,.flecha.inferencia{stroke-dasharray:14 9}
+.flecha.pregunta{stroke-dasharray:3 8;stroke-linecap:round}
+.flecha-txt{font-family:var(--fB);font-size:19px;fill:var(--navy)}
+.cols{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;height:100%}
+.col{display:flex;flex-direction:column;gap:14px}
+.col h3{min-height:84px;display:flex;align-items:flex-end;font-family:var(--fT);font-weight:700;font-size:26px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);padding-bottom:10px;border-bottom:3px solid var(--blue)}
+.col .tarj{border:2.5px solid var(--navy);padding:16px 18px;font-size:22px;line-height:1.3;cursor:pointer;background:#fff}
+.col .tarj.supuesto,.col .tarj.inferencia{border-style:dashed}
+.col .tarj.pregunta{border-style:dotted;border-width:3.5px}
+.col .tarj:hover{border-color:var(--blue)}
+.col .tarj small{display:block;margin-top:8px;font-size:17px;opacity:.7}
+</style>
+</head>
+<body>
+<div id="viewport"><div id="stage">
+
+<!-- PORTADA -->
+<section class="slide navy cover" data-deco data-title="Portada">
+  <div style="height:244px"></div>
+  <div class="kick">Innovación y Gestión de Proyectos · Visualización del proyecto</div>
+  <h1 class="t">[Nombre del proyecto]</h1>
+  <div class="sub">[La intención de transformación, en una oración, copiada de 00-intencion/intencion.md]</div>
+  <div class="spacer"></div>
+  <div class="who">Grupo [número] · Versión [número] · [fecha]</div>
+</section>
+
+<!-- VISTA 1 -->
+<section class="slide white" data-title="El ciclo que sostiene el patrón">
+  <div class="kick">Vista 1 · El ciclo que sostiene el patrón</div>
+  <div class="origen">Sale de <code class="lit">00-intencion/mapa-del-sistema.md</code></div>
+  <div class="vista">
+    <div class="lienzo">
+      <svg viewBox="0 0 1100 640">
+        <defs><marker id="pt1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#00479B"/></marker></defs>
+        <!-- Las tres zonas: Reglas, Prácticas y Narrativas. Dentro de cada zona va un elemento por cada regla, práctica o narrativa del archivo. -->
+        <g class="nodo zona"><rect x="380" y="10" width="340" height="190" rx="6"/><text class="rot" x="550" y="178" text-anchor="middle">Reglas</text></g>
+        <g class="nodo zona"><rect x="740" y="400" width="340" height="190" rx="6"/><text class="rot" x="910" y="568" text-anchor="middle">Prácticas</text></g>
+        <g class="nodo zona"><rect x="20" y="400" width="340" height="190" rx="6"/><text class="rot" x="190" y="568" text-anchor="middle">Narrativas</text></g>
+        <g class="nodo elem" data-tipo="hecho" data-desc="[Descripción de la regla]" data-fuente="00-intencion/mapa-del-sistema.md"><rect x="410" y="30" width="280" height="90" rx="6"/><text x="550" y="83" text-anchor="middle">[regla]</text></g>
+        <g class="nodo elem" data-tipo="hecho" data-desc="[Descripción de la práctica]" data-fuente="00-intencion/mapa-del-sistema.md"><rect x="770" y="420" width="280" height="90" rx="6"/><text x="910" y="473" text-anchor="middle">[práctica]</text></g>
+        <g class="nodo elem" data-tipo="hecho" data-desc="[Descripción de la narrativa]" data-fuente="00-intencion/mapa-del-sistema.md"><rect x="50" y="420" width="280" height="90" rx="6"/><text x="190" y="473" text-anchor="middle">[narrativa]</text></g>
+        <!-- Las flechas del ciclo. La clase de cada una dice su estatus: hecho, supuesto, inferencia o pregunta. -->
+        <g class="elem" data-tipo="supuesto" data-desc="[Cómo esta regla produce esta práctica]" data-fuente="00-intencion/mapa-del-sistema.md"><path class="flecha supuesto" d="M728 105 Q900 140 910 390" marker-end="url(#pt1)"/><text class="flecha-txt" x="900" y="250">[produce]</text></g>
+        <g class="elem" data-tipo="supuesto" data-desc="[Cómo esta práctica alimenta esta narrativa]" data-fuente="00-intencion/mapa-del-sistema.md"><path class="flecha supuesto" d="M732 470 Q550 420 368 470" marker-end="url(#pt1)"/><text class="flecha-txt" x="550" y="420" text-anchor="middle">[alimenta]</text></g>
+        <g class="elem" data-tipo="supuesto" data-desc="[Cómo esta narrativa sostiene esta regla]" data-fuente="00-intencion/mapa-del-sistema.md"><path class="flecha supuesto" d="M190 390 Q200 140 372 105" marker-end="url(#pt1)"/><text class="flecha-txt" x="200" y="250" text-anchor="end">[sostiene]</text></g>
+      </svg>
+    </div>
+    <div class="panel">
+      <div class="ficha" data-ficha><b>Elemento</b><p>Toquen un elemento o una flecha para ver su descripción y su fuente.</p></div>
+      <div class="leyenda" data-leyenda></div>
+    </div>
+  </div>
+</section>
+
+<!-- VISTA 2 -->
+<section class="slide white" data-title="El mapa de incertidumbres">
+  <div class="kick">Vista 2 · El mapa de incertidumbres</div>
+  <div class="origen">Sale de <code class="lit">00-intencion/supuestos.md</code>, <code class="lit">02-hipotesis/H-001.md</code> y <code class="lit">03-experimentos/E-001.md</code></div>
+  <div class="vista">
+    <div class="lienzo">
+      <!-- Una tarjeta por cada afirmación. Su clase dice su estatus, y data-desc y data-fuente lo que se muestra al tocarla. -->
+      <div class="cols">
+        <div class="col"><h3>Lo que sabemos</h3>
+          <div class="tarj hecho" data-tipo="hecho" data-desc="[Un hecho con fuente]" data-fuente="00-intencion/supuestos.md">[hecho]<small>[fuente]</small></div>
+        </div>
+        <div class="col"><h3>Lo que suponemos</h3>
+          <div class="tarj supuesto" data-tipo="supuesto" data-desc="[Un supuesto o una inferencia, sin comprobar]" data-fuente="00-intencion/supuestos.md">[supuesto o inferencia]<small>[POR VALIDAR]</small></div>
+        </div>
+        <div class="col"><h3>Lo que probaremos</h3>
+          <div class="tarj pregunta" data-tipo="pregunta" data-desc="[La pregunta del experimento y su criterio de interpretación]" data-fuente="03-experimentos/E-001.md">[experimento]<small>E-001</small></div>
+        </div>
+        <div class="col"><h3>La decisión que depende</h3>
+          <div class="tarj pregunta" data-tipo="pregunta" data-desc="[Qué decidirá el grupo según el resultado]" data-fuente="02-hipotesis/H-001.md">[decisión]<small>H-001</small></div>
+        </div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="ficha" data-ficha><b>Elemento</b><p>Toquen una tarjeta para ver su descripción y su fuente.</p></div>
+      <div class="leyenda" data-leyenda></div>
+    </div>
+  </div>
+</section>
+
+</div></div>
+
+<div id="bar"></div>
+<div id="help">← → navegar · F pantalla completa · O índice</div>
+<div id="nav"><button id="bO" title="Índice (O)">☰</button><button id="bF" title="Pantalla completa (F)">⛶</button><button id="bP" title="Anterior">←</button><button id="bN" title="Siguiente">→</button></div>
+<div id="overview"></div>
+
+<script>
+(()=>{
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const stage=$('#stage'), slides=$$('.slide'), N=slides.length;
+let cur=0;
+function fit(){stage.style.transform=`scale(${Math.min(innerWidth/1920,innerHeight/1080)})`}
+addEventListener('resize',fit);fit();
+const DECO='<svg class="deco" viewBox="0 0 420 820"><rect x="170" y="2" width="200" height="92"/><rect x="250" y="140" width="120" height="678"/><path d="M230 330 A220 220 0 0 0 230 770 Z"/><path d="M60 140 L60 818"/></svg>';
+slides.forEach((s,i)=>{
+  if(s.hasAttribute('data-deco')) s.insertAdjacentHTML('afterbegin',DECO);
+  s.insertAdjacentHTML('beforeend',`<div class="foot"><span class="pg">${String(i+1).padStart(2,'0')} / ${N}</span></div>`);
+});
+/* ---- leyenda de la convención de líneas ---- */
+const LEY=[['','Hecho con fuente'],['14 9','Supuesto o inferencia, sin comprobar'],['3 8','Pregunta abierta']];
+$$('[data-leyenda]').forEach(l=>{l.innerHTML=LEY.map(([d,t])=>`<div><svg width="70" height="14"><line x1="2" y1="7" x2="68" y2="7" stroke="#00479B" stroke-width="3" stroke-linecap="round" ${d?`stroke-dasharray="${d}"`:''}/></svg>${t}</div>`).join('')});
+/* ---- ficha de cada elemento ---- */
+const TIPO={hecho:'Hecho',supuesto:'Supuesto',inferencia:'Inferencia',pregunta:'Pregunta abierta'};
+$$('[data-desc]').forEach(el=>{el.addEventListener('click',()=>{
+  const f=$('[data-ficha]',el.closest('.slide'));
+  f.innerHTML=`<b>${TIPO[el.dataset.tipo]||'Elemento'}</b><p>${el.dataset.desc}</p><p class="fuente">Fuente: ${el.dataset.fuente||'[POR VALIDAR]'}</p>`;
+})});
+/* ---- navegación ---- */
+function go(n){
+  n=Math.max(0,Math.min(N-1,n));
+  slides.forEach((s,i)=>{s.classList.toggle('active',i===n);s.classList.toggle('past',i<n)});
+  cur=n; history.replaceState(null,'','#'+(n+1));
+  $('#bar').style.width=((n+1)/N*100)+'%';
+}
+addEventListener('keydown',e=>{
+  const k=e.key;
+  if(['ArrowRight','PageDown',' '].includes(k)){e.preventDefault();go(cur+1)}
+  else if(['ArrowLeft','PageUp'].includes(k)){e.preventDefault();go(cur-1)}
+  else if(k==='Home')go(0); else if(k==='End')go(N-1);
+  else if(k==='f'||k==='F')fs(); else if(k==='o'||k==='O')ov();
+  else if(k==='Escape')$('#overview').classList.remove('open');
+});
+function fs(){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen?.()}
+$('#bF').onclick=fs; $('#bP').onclick=()=>go(cur-1); $('#bN').onclick=()=>go(cur+1);
+const ovEl=$('#overview');
+slides.forEach((s,i)=>{const b=document.createElement('button');b.innerHTML=`<span>${String(i+1).padStart(2,'0')}</span>${s.dataset.title||''}`;b.onclick=()=>{go(i);ovEl.classList.remove('open')};ovEl.appendChild(b)});
+function ov(){ovEl.classList.toggle('open');$$('button',ovEl).forEach((b,i)=>b.classList.toggle('cur',i===cur))}
+$('#bO').onclick=ov;
+let tx=null;
+addEventListener('touchstart',e=>{tx=e.touches[0].clientX},{passive:true});
+addEventListener('touchend',e=>{if(tx==null)return;const d=e.changedTouches[0].clientX-tx;if(Math.abs(d)>70)go(cur+(d<0?1:-1));tx=null});
+let mt;addEventListener('mousemove',()=>{document.body.classList.add('mouse');clearTimeout(mt);mt=setTimeout(()=>document.body.classList.remove('mouse'),2000)});
+const h=parseInt(location.hash.slice(1));go(isNaN(h)?0:h-1);
+})();
+</script>
+</body>
+</html>
