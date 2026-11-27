@@ -2,7 +2,7 @@
 
 > Qué se repite. Se describe con episodios que se pueden observar, no como una carencia, y dice quién gana y quién pierde con la situación actual.
 
-# 00-intencion/patron.md — Análisis del Patrón Objetivo
+# Análisis del Patrón Objetivo
 
 ## 1. ¿Qué se repite? (Episodios observables)
 
@@ -22,7 +22,7 @@ El comportamiento repetido se mantiene debido a la interacción de tres capas es
 
 * **Reglas:** 
   * Asignación rígida de citas donde la inasistencia no genera una penalización inmediata visible para el usuario, desincentivando el esfuerzo de cancelar si el canal presenta fricción.
-  * La funcionalidad de cancelación existe en la App EDUS (regla institucional), pero la notificación/recordatorio tradicional enviado por la institución no explicita este flujo ni sus pasos.
+  * La funcionalidad de cancelación existe en la App EDUS (regla institucional), pero la notificación/recordatorio tradicional enviado por la institución no explica este flujo ni sus pasos.
 * **Prácticas:** 
   * Los usuarios operan bajo el hábito de "intermediación humana" (necesidad de hablar con una persona para sentir que el trámite quedó procesado).
   * Frente a dudas, la conducta aprendida por defecto es marcar por teléfono o enviar a un familiar presencialmente.
@@ -47,7 +47,3 @@ La permanencia de este patrón genera una asimetría clara en la distribución d
 1. **El usuario en su zona de confort habitada:** Gana la "falsa seguridad" psicológica de que al hablar con una persona (o ir presencialmente) tiene certeza absoluta del trámite, evitando enfrentarse a la fricción tecnológica de recordar contraseñas o usar la app.
 2. **El patrón de menor esfuerzo en el momento del imprevisto:** Si el canal tradicional falla (no contestan el teléfono), el usuario justifica éticamente el "no asistir" recargando la culpa en la falta de atención del centro de salud.
 
----
-
-## 4. Evidencia de soporte
-* **Datos de campo (25-Nov-2026):** Muestra de 5 usuarios donde el **80%** optó de forma espontánea por canales tradicionales (llamada/presencial en EBAIS o Hospital) y solo el **20%** contempló la autogestión en la App EDUS ([Ver registro completo](../01-investigacion/evidencias.md)).
