@@ -1,7 +1,7 @@
 # Mapa del sistema
 
 > Por qué se repite el patrón. Lo sostienen reglas, prácticas y narrativas, y las tres se refuerzan entre sí.
-# 01-investigacion/mapa-del-sistema.md — Mapa del Sistema EBAIS / EDUS
+# Mapa del Sistema EBAIS / EDUS
 
 ## ¿Por qué se repite? (El ciclo que se retroalimenta)
 
