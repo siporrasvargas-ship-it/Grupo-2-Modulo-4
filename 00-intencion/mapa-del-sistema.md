@@ -1,19 +1,32 @@
 # Mapa del sistema
 
 > Por qué se repite el patrón. Lo sostienen reglas, prácticas y narrativas, y las tres se refuerzan entre sí.
+# 01-investigacion/mapa-del-sistema.md — Mapa del Sistema EBAIS / EDUS
 
-## Reglas
+## ¿Por qué se repite? (El ciclo que se retroalimenta)
 
-- [Una norma, un procedimiento, una autorización o un incentivo que produce el patrón.]
-
-## Prácticas
-
-- [Lo que la gente hace de verdad, incluidos los atajos.]
-
-## Narrativas
-
-- [Una frase con que se justifica lo actual, como «si no pasa por todos los niveles, se pierde el control».]
-
-## Cómo se refuerzan entre sí
-
-[El ciclo: esta regla produce esta práctica, que alimenta esta narrativa, que a su vez sostiene la regla.]
+```text
+ ┌─────────────────────────────────────────────────────────┐
+ │                        REGLAS                           │
+ │ (No hay castigo por no ir, el recordatorio no dice      │
+ │  cómo cancelar por EDUS, cita asignada rígida)          │
+ └──────────────────────────┬──────────────────────────────┘
+                            │
+                            │ (producen)
+                            ▼
+ ┌─────────────────────────────────────────────────────────┐
+ │                      PRÁCTICAS                          │
+ │ (Llamar al EBAIS/Hospital, ir presencialmente a avisar, │
+ │  mandar a un familiar o faltar del todo)               │
+ └──────────────────────────┬──────────────────────────────┘
+                            │
+                            │ (alimentan)
+                            ▼
+ ┌─────────────────────────────────────────────────────────┐
+ │                     NARRATIVAS                          │
+ │ ("En el EBAIS nunca contestan", "La app EDUS no sirve  │
+ │  para eso", "Hay que ir a hablar con alguien")          │
+ └──────────────────────────┬──────────────────────────────┘
+                            │
+                            │ (sostienen)
+                            └──────────────────────────────┘
