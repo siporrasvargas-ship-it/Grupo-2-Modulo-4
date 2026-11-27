@@ -3,33 +3,6 @@
 > Por qué se repite el patrón. Lo sostienen reglas, prácticas y narrativas, y las tres se refuerzan entre sí.
 # Mapa del Sistema EBAIS / EDUS
 
-## ¿Por qué se repite? (El ciclo que se retroalimenta)
-
-```text
- ┌─────────────────────────────────────────────────────────┐
- │                        REGLAS                           │
- │ (No hay castigo por no ir, el recordatorio no dice      │
- │  cómo cancelar por EDUS, cita asignada rígida)          │
- └──────────────────────────┬──────────────────────────────┘
-                            │
-                            │ (producen)
-                            ▼
- ┌─────────────────────────────────────────────────────────┐
- │                      PRÁCTICAS                          │
- │ (Llamar al EBAIS/Hospital, ir presencialmente a avisar, │
- │  mandar a un familiar o faltar del todo)               │
- └──────────────────────────┬──────────────────────────────┘
-                            │
-                            │ (alimentan)
-                            ▼
- ┌─────────────────────────────────────────────────────────┐
- │                     NARRATIVAS                          │
- │ ("En el EBAIS nunca contestan", "La app EDUS no sirve  │
- │  para eso", "Hay que ir a hablar con alguien")          │
- └──────────────────────────┬──────────────────────────────┘
-                            │
-                            │ (sostienen)
-                            └──────────────────────────────┘
 # Cancelación de citas en el EBAIS
 
 ## Componentes del sistema
@@ -63,3 +36,31 @@
 2. **Las prácticas alimentan narrativas.** Llamar varias veces y encontrar la línea ocupada refuerza la idea de que “nadie contesta”. Si la persona finalmente logra cancelar en ventanilla, es comprensible que la próxima vez prefiera ir directamente y recomiende a otras personas hacer lo mismo.
 
 3. **Las narrativas sostienen las reglas.** Cuando se da por hecho que “la app no es para eso”, las personas siguen dependiendo del teléfono y de la ventanilla. Mientras esos canales se perciban como las únicas opciones, es menos probable que se pida incluir en el recordatorio instrucciones claras para cancelar por la vía digital y recibir una confirmación inmediata.
+
+## ¿Por qué se repite? (El ciclo que se retroalimenta)
+
+```text
+ ┌─────────────────────────────────────────────────────────┐
+ │                        REGLAS                           │
+ │ (No hay castigo por no ir, el recordatorio no dice      │
+ │  cómo cancelar por EDUS, cita asignada rígida)          │
+ └──────────────────────────┬──────────────────────────────┘
+                            │
+                            │ (producen)
+                            ▼
+ ┌─────────────────────────────────────────────────────────┐
+ │                      PRÁCTICAS                          │
+ │ (Llamar al EBAIS/Hospital, ir presencialmente a avisar, │
+ │  mandar a un familiar o faltar del todo)               │
+ └──────────────────────────┬──────────────────────────────┘
+                            │
+                            │ (alimentan)
+                            ▼
+ ┌─────────────────────────────────────────────────────────┐
+ │                     NARRATIVAS                          │
+ │ ("En el EBAIS nunca contestan", "La app EDUS no sirve  │
+ │  para eso", "Hay que ir a hablar con alguien")          │
+ └──────────────────────────┬──────────────────────────────┘
+                            │
+                            │ (sostienen)
+                            └──────────────────────────────┘
